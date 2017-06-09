@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+        
+    <record model="ir.ui.view" id="view_persona_form">
+        <field name="name">persona.form</field>
+        <field name="model">persona</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="persona">
+                <!--sheet-->
+                    <header>
+                        <button name="desactivar" string="Desactivar registro" type="object"/>
+                    </header>
+	            <group col="4" colspan="2">
+                    <field name="apellidos" select="0"/>
+                    <field name="nombres" placeholder="Primer y Segundo Nombre" select="2"/>
+	                <field name="cedula" widget="char" select="1"/>
+        	        <newline/>
+                    <field name="sexo" select="0"/>
+        	        <field name="fecha_nacimiento" select="0"/>
+                    <notebook colspan='4'>
+                        <page name="extra_info" string="Informacion adicional">
+                            <group col="4" colspan="4">
+            	                <field name="ingreso_mensual" select="0"/>
+            	                <field name="active" select="0"/>
+            	                <field name="foto" select="0"/>
+                                <separator string="Mensaje" colspan="4"/>
+                                <field name="mensaje" colspan="4" nolabel="1" select="0"/>
+                            </group>
+                        </page>
+                        <page name="ubicacion" string="Ubicacion">
+                            <group col="4" colspan="2">
+                                <separator string="Direccion" colspan="4"/>
+                                <field name="state_id" domain="[('country_id','=','Venezuela')]"/>
+                                <field name="municipality_id" domain="[('state_id','=',[state_id])]"/>
+                                <field name="parish_id" domain="[('municipality_id','=',[state_id])]"/>
+                                <field name="direccion" colspan="4" nolabel="1" select="0"/>
+                            </group>
+                        </page>
+                        <page name="telefonos" string="Telefonos">
+                            <group col="4" colspan="2">
+                                <field name="telefono_ids" nolabel="1">
+                                    <tree editable="True">
+                                        <field name="telefono"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="deportes" string="Deportes">
+                            <group col="4" colspan="4">
+                                <field name="deporte_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+	            </group>
+            <!--/sheet-->
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_persona_tree">
+        <field name="name">persona.tree</field>
+        <field name="model">persona</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="persona">
+                <field name="apellidos"/>
+                <field name="nombres"/>
+                <field name="cedula"/>
+                <field name="sexo"/>
+                <!--field name="direccion"/>
+                
+                <field name="fecha_nacimiento"/>
+                <field name="ingreso_mensual"/>
+                <field name="mensaje"/>
+                <field name="active"/>
+                <field name="foto"/-->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_persona_search">
+        <field name="name">persona.search</field>
+        <field name="model">persona</field>
+        <field name="arch" type="xml">
+            <search string="Search Personas">
+                <field name="nombres"/>
+                <field name="apellidos"/>
+                <field name="cedula"/>
+                <filter name="filtro_sexo_m" string="Sexo Masculino" domain="[('sexo','=','M')]"/>
+                <filter name="filtro_sexo_f" string="Sexo Femenino" domain="[('sexo','=','F')]"/>
+                <filter name="agrupar_sexo" string="Sexo" context="{'group_by':'sexo'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_persona">
+        <field name="name">persona</field>
+        <field name="res_model">persona</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_persona_telefono_form">
+        <field name="name">persona.telefono.form</field>
+        <field name="model">persona.telefono</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="persona.telefono">
+                <group col="4" colspan="2">
+                    <field name="telefono" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_persona_telefono_tree">
+        <field name="name">persona.telefono.tree</field>
+        <field name="model">persona.telefono</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="persona.telefono">
+                <field name="telefono"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_persona_telefono">
+        <field name="name">Telefono</field>
+        <field name="res_model">persona.telefono</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_persona_deporte_form">
+        <field name="name">persona.deporte.form</field>
+        <field name="model">persona.deporte</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="persona.deporte">
+                <group col="4" colspan="2">
+                    <field name="nombre" />
+                    <field name="descripcion" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_persona_deporte_tree">
+        <field name="name">persona.deporte.tree</field>
+        <field name="model">persona.deporte</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="persona.deporte">
+                <field name="nombre"/>
+                <field name="descripcion"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_persona_deporte">
+        <field name="name">Deporte</field>
+        <field name="res_model">persona.deporte</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Registro Principal" id="menu_registro_base"/>
+    	<menuitem name="Registro" id="menu_registro" parent="menu_registro_base"/>
+    		<menuitem name="Registro/Persona" id="menu_persona" action="action_persona" parent="menu_registro"/>
+        <menuitem name="Configuracion" id="menu_configuracion" parent="menu_registro_base"/>
+            <menuitem name="Deporte" id="menu_deporte" action="action_persona_deporte" parent="menu_configuracion"/>
+        
+</data>
+</openerp>
