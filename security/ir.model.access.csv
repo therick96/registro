@@ -1,2 +1,4 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_persona","persona","model_persona","base.group_user",1,0,0,0
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_persona,persona,model_persona,base.group_user,1,1,1,0
+access_persona_telefono,persona.telefono,model_persona_telefono,base.group_user,1,1,1,0
+access_persona_deporte,persona.deporte,model_persona_deporte,base.group_user,1,0,1,0

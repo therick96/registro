@@ -26,18 +26,21 @@ class persona(models.Model):
     """Modelo utilizado para el regsitro de nuevas personas"""
     _name = 'persona'
     _rec_name = 'cedula'
-    _order = 'apellidos'
+    _order = 'apellido1'
 
     cedula = fields.Char(string="Cedula", size=8, help="Ingrese la cedula")
-    nombres = fields.Char(string="Nombres", help="Ingrese primer y segundo nombre")
-    apellidos = fields.Char(string="Apellidos", help="Ingrese primer y segundo apellido")
+    nombre1 = fields.Char(string="Primer Nombre", help="Ingrese primer nombre")
+    nombre2 = fields.Char(string="Segundo Nombre", help="Ingrese segundo nombre")
+    apellido1 = fields.Char(string="Primer Apellido", help="Ingrese primer apellido")
+    apellido2 = fields.Char(string="Segundo Apellido", help="Ingrese segundo apellido")
     direccion = fields.Text(string="Direccion", help="Ingrese la direccion")
     sexo = fields.Selection([('M','Masculino'),('F','Femenino')], string="Sexo", help="Ingrese su sexo")
     fecha_nacimiento = fields.Date(string="Fecha de nacimiento", help="Ingrese su fecha de nacimiento")
-    ingreso_mensual = fields.Float(string="Ingreso mensual", help="Especifique su ingreso mensual")
-    mensaje = fields.Html(string="Mensaje", help="Ingresa un mensaje")
+    correo = fields.Char(string="Correo Electronico", help="Ingrese el correo electronico")
+#    ingreso_mensual = fields.Float(string="Ingreso mensual", help="Especifique su ingreso mensual")
+ #   mensaje = fields.Html(string="Mensaje", help="Ingresa un mensaje")
     active = fields.Boolean(string="Activo", help="Activar o desactivar el registro")
-    foto = fields.Binary(string="Fotografia")
+  #  foto = fields.Binary(string="Fotografia")
 
     state_id = fields.Many2one('res.country.state', string="Estado")
     municipality_id = fields.Many2one('res.country.state.municipality', string="Municipio")
@@ -45,11 +48,22 @@ class persona(models.Model):
     telefono_ids = fields.One2many('persona.telefono', 'persona_id', size=11, string="Telefonos")
     deporte_ids = fields.Many2many('persona.deporte', string="Deportes")
 
+    tipoVivienda_id = fields.Many2one('persona.tipovivienda', string="Tipo de vivienda")
+
+
+    @api.model
+    def name_get(self):
+        result = []
+        for persona in self:
+            name = u'%s - %s %s' % (persona.cedula, persona.nombre1, persona.apellido1)
+            result.append((persona.id, name))
+        return result
 
     @api.multi
     def desactivar(self):
         for record in self:
             self.active = False
+
 
     @api.onchange('state_id')
     def _onchange_state_id(self):
@@ -76,3 +90,24 @@ class PersonaDeporte(models.Model):
 
     nombre = fields.Char('Nombre')
     descripcion = fields.Text('Descripcion')
+
+
+class Vivienda(models.Model):
+    _name = "persona.vivienda"
+
+    fecha_registro = fields.Date(string="Fecha de Registro")
+
+class TipoVivienda(models.Model):
+    _name = "persona.tipovivienda"
+
+    tipo = fields.Char('Tipo')
+
+class TenenciaVivienda(models.Model):
+    _name = "persona.tenenciavivienda"
+
+    tenencia = fields.Char('Tenencia')
+
+class CondicionVivienda(models.Model):
+    _name = "persona.condicionvivienda"
+
+    condicion = fields.Char('Condicion')
