@@ -38,9 +38,9 @@
                             <field name="vivienda_ids"  nolabel="1"/>
                         </group>
                     </page>
-                    <page name="telefonos" string="Telefonos">
+                    <page name="socioeconomico" string="Informacion SocioEconomica">
                         <group col="4" colspan="2">
-                                
+                            <field name="socioeconomico_ids" nolabel="1"/>
                         </group>
                     </page>
                     <page name="deportes" string="Deportes">
@@ -66,14 +66,6 @@
                 <field name="nombre2"/>
                 <field name="cedula"/>
                 <field name="sexo"/>
-                <!--field name="direccion"/>
-                
-                <field name="fecha_nacimiento"/>
-                <field name="ingreso_mensual"/>
-                <field name="mensaje"/>
-                <field name="active"/>
-                <field name="foto"/-->
-
             </tree>
         </field>
     </record>
@@ -163,9 +155,6 @@
     </record-->
 
 
-
-
-
     <record model="ir.ui.view" id="view_vivienda_form">
         <field name="name">vivienda.form</field>
         <field name="model">vivienda</field>
@@ -174,6 +163,7 @@
             <form string="vivienda">
                 <group col="2" colspan="2">
                     <field name="tipovivienda_id"/>
+                    <field name="condicion_id"/>
                     <field name="tenencia_id"/>
                     <field name="internet" />
                 </group>
@@ -187,6 +177,7 @@
         <field name="arch" type="xml">
             <tree string="vivienda">
                 <field name="tipovivienda_id"/>
+                <field name="condicion_id"/>
                 <field name="tenencia_id"/>
                 <field name="internet"/>
             </tree>
@@ -229,69 +220,81 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!--record model="ir.ui.view" id="view_persona_tenenciavivienda_form">
-        <field name="name">persona.tenenciavivienda.form</field>
-        <field name="model">persona.tenenciavivienda</field>
-        <field name="type">form</field>
+    <record model="ir.ui.view" id="view_vivienda_search">
+        <field name="name">vivienda.search</field>
+        <field name="model">vivienda</field>
         <field name="arch" type="xml">
-            <form string="persona.tipovivienda">
-                <group col="2" colspan="2">
-                    <field name="tenencia" />
-                </group>
-            </form>
+            <search string="Search Personas">
+                <field name="tipovivienda_id"/>
+                <field name="condicion_id"/>
+                <field name="tenencia_id"/>
+                <field name="internet"/>
+                <!--field name="cedula"/>
+                <filter name="filtro_sexo_m" string="Sexo Masculino" domain="[('sexo','=','M')]"/>
+                <filter name="filtro_sexo_f" string="Sexo Femenino" domain="[('sexo','=','F')]"/>
+                <filter name="agrupar_sexo" string="Sexo" context="{'group_by':'sexo'}"/-->
+            </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_persona_tenenciavivienda_tree">
-        <field name="name">persona.tenenciavivienda.tree</field>
-        <field name="model">persona.tenenciavivienda</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="persona.tenenciavivienda">
-                <field name="tenencia"/>
-            </tree>
-        </field>
-    </record>
-    <record model="ir.actions.act_window" id="action_persona_tenenciavivienda">
-        <field name="name">Tenenciavivienda</field>
-        <field name="res_model">persona.tenenciavivienda</field>
+    <record model="ir.actions.act_window" id="action_vivienda">
+        <field name="name">vivienda</field>
+        <field name="res_model">vivienda</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record model="ir.ui.view" id="view_persona_condicionvivienda_form">
-        <field name="name">persona.condicionvivienda.form</field>
-        <field name="model">persona.condicionvivienda</field>
+    
+
+    <record model="ir.ui.view" id="view_socioeconomico_form">
+        <field name="name">socioeconomico.form</field>
+        <field name="model">socioeconomico</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="persona.condicionvivienda">
+            <form string="socioeconomico">
                 <group col="2" colspan="2">
-                    <field name="condicion" />
+                    <field name="discapacidad"/>
+                    <field name="cualdiscapacidad"/>
+                    <field name="cantidadhijos"/>
+                    <field name="trabajo" />
+                    <field name="ocupacion" />
+                    <field name="ingreso"/>
+                    <field name="instruccion"/>
+                    
                 </group>
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_persona_condicionvivienda_tree">
-        <field name="name">persona.condicionvivienda.tree</field>
-        <field name="model">persona.condicionvivienda</field>
+    <record model="ir.ui.view" id="view_socioeconomico_tree">
+        <field name="name">socioeconomico.tree</field>
+        <field name="model">socioeconomico</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="persona.condicionvivienda">
-                <field name="condicion"/>
+            <tree string="socioeconomico">
+                <field name="discapacidad"/>
+                <field name="cualdiscapacidad"/>
+                <field name="cantidadhijos"/>
+                <field name="trabajo" />
+                <field name="ocupacion" />
+                <field name="ingreso"/>
+                <field name="instruccion"/>
+                
             </tree>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="action_persona_condicionvivienda">
-        <field name="name">Condicionvivienda</field>
-        <field name="res_model">persona.condicionvivienda</field>
+    <record model="ir.actions.act_window" id="action_socioeconomico">
+        <field name="name">socioeconomico</field>
+        <field name="res_model">socioeconomico</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record-->
+    </record>
+
 
 
     <menuitem name="Registro Principal" id="menu_registro_base"/>
     	<menuitem name="Registro" id="menu_registro" parent="menu_registro_base"/>
     		<menuitem name="Registro/Persona" id="menu_persona" action="action_persona" parent="menu_registro"/>
             <menuitem name="vivienda" id="menu_vivienda" action="action_vivienda" parent="menu_registro"/>
+            <menuitem name="socioeconomico" id="menu_socioeconomico" action="action_socioeconomico" parent="menu_registro"/>
 
         <menuitem name="Configuracion" id="menu_configuracion" parent="menu_registro_base"/>
             <!--menuitem name="Deporte" id="menu_deporte" action="action_persona_deporte" parent="menu_configuracion"/-->

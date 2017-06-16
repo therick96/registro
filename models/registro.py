@@ -50,6 +50,7 @@ class persona(models.Model):
     deporte_ids = fields.Many2many('persona.deporte', string="Deportes")
 
     vivienda_ids = fields.One2many('vivienda','persona_id',string="Vivienda")
+    socioeconomico_ids = fields.One2many('socioeconomico','persona_id', string="SocioEconomico")
 
 
     @api.model
@@ -93,22 +94,21 @@ class PersonaDeporte(models.Model):
     descripcion = fields.Text('Descripcion')
 
 
+
 class Vivienda(models.Model):
     _name = "vivienda"
 
     persona_id = fields.Many2one('persona')
-    tipovivienda_id = fields.Many2one('vivienda.tipovivienda',string="tipo de vivienda")
-    condicion_id = fields.Many2one('vivienda.condicion')
-    tenencia_id = fields.Many2one('vivienda.tenencia')
+    tipovivienda_id = fields.Many2one('vivienda.tipovivienda',string="Tipo de Vivienda")
+    condicion_id = fields.Many2one('vivienda.condicion', string="Condicion de la Vivienda")
+    tenencia_id = fields.Many2one('vivienda.tenencia', string="Tenecia")
     internet = fields.Boolean(string='¿Posee Internet?')
-
-
 
 class TipoVivienda(models.Model):
     _name = "vivienda.tipovivienda"
     _rec_name = 'tipo'
 
-    vivienda_ids = fields.One2many('vivienda','tipovivienda_id',string="tipo")
+    #vivienda_ids = fields.One2many('vivienda','tipovivienda_id',string="tipo")
     tipo = fields.Char('Tipo')
 
 class TenenciaVivienda(models.Model):
@@ -119,5 +119,22 @@ class TenenciaVivienda(models.Model):
 
 class CondicionVivienda(models.Model):
     _name = "vivienda.condicion"
+    _rec_name = "condicion"
 
     condicion = fields.Char('Condicion')
+
+
+class Socioeconomico(models.Model):
+    _name = "socioeconomico"
+
+    persona_id = fields.Many2one('persona')
+
+    discapacidad = fields.Boolean(string="¿Discapacitado?")
+    cualdiscapacidad = fields.Char('Discapacidad')
+    cantidadhijos = fields.Char('Hijos')
+    ocupacion = fields.Char('Ocupacion')
+    ingreso = fields.Char('Ingresos')
+    instruccion = fields.Selection([('No tiene','No tiene'),('Primaria','Primaria'),
+                                    ('Bachillerato','Bachillerato'),('Universitaria','Universitaria')], 
+                                    string="Grando de Instruccion")
+    trabajo = fields.Boolean(string="¿Trabaja?")
