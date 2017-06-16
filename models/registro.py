@@ -113,6 +113,7 @@ class TipoVivienda(models.Model):
 
 class TenenciaVivienda(models.Model):
     _name = "vivienda.tenencia"
+    _rec_name = "tenencia"
 
     tenencia = fields.Char('Tenencia')
 
