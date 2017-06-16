@@ -29,13 +29,13 @@
                             <field name="parish_id" domain="[('municipality_id','=',[state_id])]"/>
                             <field name="direccion" colspan="4" nolabel="1" select="0"/>
                             <separator string="Contactos" colspan="4"/>
-                            <field name="telefono_ids" nolabel="1" colspan="4"/>
                             <field name="correo" colspan="4"/>
+                            <field name="telefono_ids" nolabel="1" colspan="4"/>
                         </group>
                     </page>
                     <page name="vivienda" string="Vivienda">
                         <group col="4" colspan="4">
-                            <field name="tipovivienda_id">
+                            <field name="vivienda_ids"  nolabel="1"/>
                         </group>
                     </page>
                     <page name="telefonos" string="Telefonos">
@@ -166,36 +166,68 @@
 
 
 
-    <record model="ir.ui.view" id="view_persona_tipovivienda_form">
-        <field name="name">persona.tipovivienda.form</field>
-        <field name="model">persona.tipovivienda</field>
+    <record model="ir.ui.view" id="view_vivienda_form">
+        <field name="name">vivienda.form</field>
+        <field name="model">vivienda</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="persona.tipovivienda">
+            <form string="vivienda">
+                <group col="2" colspan="2">
+                    <field name="tipovivienda_id"/>
+                    <field name="internet" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_vivienda_tree">
+        <field name="name">vivienda.tree</field>
+        <field name="model">vivienda</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="vivienda">
+                <field name="tipovivienda_id"/>
+                <field name="internet"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_vivienda">
+        <field name="name">Vivienda</field>
+        <field name="res_model">vivienda</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_vivienda_tipovivienda_form">
+        <field name="name">vivienda.tipovivienda.form</field>
+        <field name="model">vivienda.tipovivienda</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="vivienda.tipovivienda">
                 <group col="2" colspan="2">
                     <field name="tipo" />
                 </group>
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_persona_tipovivienda_tree">
-        <field name="name">persona.tipovivienda.tree</field>
-        <field name="model">persona.tipovivienda</field>
+    <record model="ir.ui.view" id="view_vivienda_tipovivienda_tree">
+        <field name="name">vivienda.tipovivienda.tree</field>
+        <field name="model">vivienda.tipovivienda</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="persona.tipovivienda">
+            <tree string="vivienda.tipovivienda">
                 <field name="tipo"/>
             </tree>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="action_persona_tipovivienda">
+    <record model="ir.actions.act_window" id="action_vivienda_tipovivienda">
         <field name="name">Tipovivienda</field>
-        <field name="res_model">persona.tipovivienda</field>
+        <field name="res_model">vivienda.tipovivienda</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record model="ir.ui.view" id="view_persona_tenenciavivienda_form">
+    <!--record model="ir.ui.view" id="view_persona_tenenciavivienda_form">
         <field name="name">persona.tenenciavivienda.form</field>
         <field name="model">persona.tenenciavivienda</field>
         <field name="type">form</field>
@@ -251,17 +283,18 @@
         <field name="res_model">persona.condicionvivienda</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record-->
 
 
     <menuitem name="Registro Principal" id="menu_registro_base"/>
     	<menuitem name="Registro" id="menu_registro" parent="menu_registro_base"/>
     		<menuitem name="Registro/Persona" id="menu_persona" action="action_persona" parent="menu_registro"/>
-            <!--menuitem name="Vivienda" id="menu_vivienda" action="action_persona_vivienda" parent="menu_registro"/-->
+            <menuitem name="vivienda" id="menu_vivienda" action="action_vivienda" parent="menu_registro"/>
 
         <menuitem name="Configuracion" id="menu_configuracion" parent="menu_registro_base"/>
             <!--menuitem name="Deporte" id="menu_deporte" action="action_persona_deporte" parent="menu_configuracion"/-->
-            <menuitem name="Tipovivienda" id="menu_tipovivienda" action="action_persona_tipovivienda" parent="menu_configuracion"/>
+            
+            <menuitem name="Tipovivienda" id="menu_vivienda_tipovivienda" action="action_vivienda_tipovivienda" parent="menu_configuracion"/>
             <!--menuitem name="Tenenciavivienda" id="menu_tenenciavivienda" action="action_persona_tenenciavivienda" parent="menu_configuracion"/>
             <menuitem name="Condicionvivienda" id="menu_condicionvivienda" action="action_persona_condicionvivienda" parent="menu_configuracion"/-->
         

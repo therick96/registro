@@ -28,7 +28,7 @@ class persona(models.Model):
     _rec_name = 'cedula'
     _order = 'apellido1'
 
-    cedula = fields.Char(string="Cedula", size=8, help="Ingrese la cedula")
+    cedula = fields.Char(string="Cedula", required=True, size=8, help="Ingrese la cedula")
     nombre1 = fields.Char(string="Primer Nombre", help="Ingrese primer nombre")
     nombre2 = fields.Char(string="Segundo Nombre", help="Ingrese segundo nombre")
     apellido1 = fields.Char(string="Primer Apellido", help="Ingrese primer apellido")
@@ -45,10 +45,11 @@ class persona(models.Model):
     state_id = fields.Many2one('res.country.state', string="Estado")
     municipality_id = fields.Many2one('res.country.state.municipality', string="Municipio")
     parish_id = fields.Many2one('res.country.state.municipality.parish', string="Parroquia")
+
     telefono_ids = fields.One2many('persona.telefono', 'persona_id', size=11, string="Telefonos")
     deporte_ids = fields.Many2many('persona.deporte', string="Deportes")
 
-    tipoVivienda_id = fields.Many2one('persona.tipovivienda', string="Tipo de vivienda")
+    vivienda_ids = fields.One2many('vivienda','persona_id',string="Vivienda")
 
 
     @api.model
@@ -93,21 +94,29 @@ class PersonaDeporte(models.Model):
 
 
 class Vivienda(models.Model):
-    _name = "persona.vivienda"
+    _name = "vivienda"
 
-    fecha_registro = fields.Date(string="Fecha de Registro")
+    persona_id = fields.Many2one('persona')
+    tipovivienda_id = fields.Many2one('vivienda.tipovivienda',string="tipo de vivienda")
+    condicion_id = fields.Many2one('vivienda.condicion')
+    tenencia_id = fields.Many2one('vivienda.tenencia')
+    internet = fields.Boolean(string='¿Posee Internet?')
+
+
 
 class TipoVivienda(models.Model):
-    _name = "persona.tipovivienda"
+    _name = "vivienda.tipovivienda"
+    _rec_name = 'tipo'
 
+    vivienda_ids = fields.One2many('vivienda','tipovivienda_id',string="tipo")
     tipo = fields.Char('Tipo')
 
 class TenenciaVivienda(models.Model):
-    _name = "persona.tenenciavivienda"
+    _name = "vivienda.tenencia"
 
     tenencia = fields.Char('Tenencia')
 
 class CondicionVivienda(models.Model):
-    _name = "persona.condicionvivienda"
+    _name = "vivienda.condicion"
 
     condicion = fields.Char('Condicion')
